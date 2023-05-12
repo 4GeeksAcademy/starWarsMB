@@ -6,8 +6,12 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Planets } from "./views/Plantes";
 import { PlanetDetail } from "./views/PlanetsDetail";
-import { Detail } from "./component/detail";
+import { VehicleDetail } from "./views/VehicleDetail";
+import { PeopleDetail } from "./views/PeopleDetail";
+
+
 
 
 
@@ -25,8 +29,10 @@ const Layout = () => {
 					<Navbar />
 					<Routes>
 						<Route path="/" element={<Home />} />
-						{/* <Route path="/planets/" element={<Planets />} /> */}
+						<Route path="/planets" element={<Planets />} />
 						<Route path="/planets/:planetId" element={<PlanetDetail />} />
+						<Route path="/vehicles/:vehicleId" element={<VehicleDetail />}/>
+						<Route path="/people/:peopleId" element={<PeopleDetail/>}/>
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					{/* <Card /> */}

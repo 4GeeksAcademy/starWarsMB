@@ -21,13 +21,14 @@ export const Home = () => {
 		
 	
 	<div className="text-center mt-5">
-	
-			< Card 
 
-		
-
-			element="planets"
-			/>
+			< Card element="people"/>
+			<br></br>
+			< Card element="vehicles"/>
+			<br></br>
+			< Card element="planets"/>
+			<br></br>
+			
 			<Detail/>
 	{/* // 	<h1>Hello Rigo!</h1>
 	// 	<p>

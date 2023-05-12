@@ -21,12 +21,17 @@ export const Navbar = () => {
 			{/* Boton de Favoritos */}
 			<div className="btn-group">
 			<button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    		Favorites
+    		Favorites <span className="badge bg-danger">{store.favorites.length}</span>
   			</button>
-			<ul className="dropdown-menu">
+			<ul className="dropdown-menu dropdown-menu-end ">
 				{store.favorites.map((element, index)=>{
 					return (
-						<li key={index}>{element}</li>
+						<li key={index}>{element} 
+						<button onClick={()=>{actions.deleteFavorite(index)}} >
+						<i className="bi bi-trash"></i>
+						</button></li>
+						
+						
 
 					)
 				})}

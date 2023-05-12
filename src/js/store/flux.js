@@ -1,8 +1,15 @@
+import { element } from "prop-types"
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			planet:[],
-			favorites: []
+			favorites: [],
+			vehicle:[],
+			people:[], 
+			// pages:[],
+			// records:[]
+			
 			
 		},
 		actions: {
@@ -15,11 +22,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					let data = await response.json()
 					let obj = {}
-					obj[element] = data.results.map(item => ({
-						...item,
-						img: `https://starwars-visualguide.com/assets/img/${element=="people"?"characters":element}/${item.uid}.jpg`
+					obj[element] = data.results.map(id => ({
+						...id,
+						img: `https://starwars-visualguide.com/assets/img/${element=="people"?"characters":element}/${id.uid}.jpg`
 					}))
 					setStore(obj)
+					return {
+						pages: data.total_pages || 0,
+						records : data.total_records || 0
+					}
+					
 
 				} catch (error) {
 					console.error(error)
@@ -39,7 +51,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			detailPlanet: async (id, element) => {
+			deleteFavorite: (element) => {
+
+				const favorite = getStore().favorites;	
+				let newFavorites = [...favorite]
+				newFavorites.splice(element, 1);
+				console.log("favorite")
+				console.log(newFavorites)
+				setStore({ favorites: newFavorites })
+			},
+
+			detailPlanet: async (id) => {
 				console.log(id)
 				let baseUrl = `https://www.swapi.tech/api/planets/${id}`
 				console.log(baseUrl)
@@ -49,16 +71,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!response.ok) return response.status
 
 					let data = await response.json()
-					let obj = {}
-					obj[element] = data.result.map(id => ({...plantet}))
-					// obj[element] = data.results.map(id => ({
-					// 	...id,
-					// 	img: `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`
-					// }))
-					// console.log(data)
-					// setStore({planet: data.result})
-					// console.log("detailplanet")
+					
+					console.log(data.result.properties)
+					// setStore(obj)
+
+					setStore({planet: data.result})
+					// let detailPlanet= ({planet: data.result, img: `https://starwars-visualguide.com/assets/img/planets/${id}.jpg` })
+					// // console.log("detailplanet")
 					console.log(getStore().planet)
+					
+				} catch (error) {
+					console.error(error)
+
+				}
+			},
+
+			
+			detailVehicle: async (id) => {
+				console.log(id)
+				let baseUrl = `https://www.swapi.tech/api/vehicles/${id}`
+				console.log(baseUrl)
+				try {
+					let response = await fetch(baseUrl)
+					console.log(response)
+					if (!response.ok) return response.status
+
+					let data = await response.json()
+					
+					console.log(data.result.properties)
+					// setStore(obj)
+
+					setStore({vehicle: data.result})
+					// let detailPlanet= ({planet: data.result, img: `https://starwars-visualguide.com/assets/img/planets/${id}.jpg` })
+					// // console.log("detailplanet")
+					console.log(getStore().vehicle)
+					
+				} catch (error) {
+					console.error(error)
+
+				}
+			},
+
+			detailPeople: async (id) => {
+				console.log(id)
+				let baseUrl = `https://www.swapi.tech/api/people/${id}`
+				console.log(baseUrl)
+				try {
+					let response = await fetch(baseUrl)
+					console.log(response)
+					if (!response.ok) return response.status
+
+					let data = await response.json()
+					
+					console.log(data.result.properties)
+					// setStore(obj)
+
+					setStore({people: data.result})
+					// let detailPlanet= ({planet: data.result, img: `https://starwars-visualguide.com/assets/img/planets/${id}.jpg` })
+					// // console.log("detailplanet")
+					console.log(getStore().people)
 					
 				} catch (error) {
 					console.error(error)
